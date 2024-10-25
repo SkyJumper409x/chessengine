@@ -1,0 +1,20 @@
+[Event "Game for sample PGN"]
+[Site "Chess.com"]
+[Date "2024.08.26"]
+[Round "1"]
+[White "Mario, Mario"]
+[Black "Mario, Luigi"]
+[Result "1-0"]
+[WhiteUrl ""]
+[WhiteCountry ""]
+[WhiteTitle ""]
+[BlackUrl ""]
+[BlackCountry ""]
+[BlackTitle ""]
+[ECO "C57: two knights defence, Fegatello attack"]
+[TimeControl "180 sec"]
+[WhiteElo "999"]
+[BlackElo "666"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 Nxd5 6. Nxf7 Kxf7 7. Qf3+ Ke8 8. Bxd5 Nb4 9. Qf7#
+1-0
