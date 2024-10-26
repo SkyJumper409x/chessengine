@@ -171,11 +171,27 @@ public class PGNFileReader extends FileReader {
         System.out.println(game.getBoard());
         return result;
     }
+    public void printDbg() {
+        printDbg("", "printDbg");
+    }
+    void printDbg(String msg) {
+        printDbg(msg, "readFile");
+    }
     // method for printing debug stuffs
-    public void printDbg(String msg) {
-        System.out.printf("In %s.readFile(): %s (n: \'%s\', readCharCount: %d, tmpBufs: %s,%n\tinTag: %b, inTagName: %b, inTagValue: %b, inMovetext: %b,%n\tinbetweenMovetextTokens: %b, previousMovetextTokenType: %d, previousMovetextTokenType as String: %s)%n",
-        getClass().getCanonicalName(), msg, cbuf[0] == '\n' ? "\\n" : String.valueOf(cbuf[0]), readCharCount, join(true, tmpBufs), inTag, inTagName, inTagValue, inMovetext, inbetweenMovetextTokens, previousMovetextTokenType, (previousMovetextTokenType < -1 || previousMovetextTokenType > 1) ? "invalid index" : new String[]{"moveIndex", "moveWhite", "moveBlack"}[previousMovetextTokenType+1]);
+    void printDbg(String msg, String methodName) {
+        System.out.printf("In %s.%s(): \"%s\" {%n\tn: \'%s\', readCharCount: %d, tmpBufs: %s,%n\tinTag: %b, inTagName: %b, inTagValue: %b, inMovetext: %b,%n\tinbetweenMovetextTokens: %b, previousMovetextTokenType: %d, previousMovetextTokenType as String: %s%n}%n",
+            getClass().getCanonicalName(), methodName, msg, 
+            String.valueOf(cbuf[0]).translateEscapes(), readCharCount, join(true, tmpBufs),
+            inTag, inTagName, inTagValue, inMovetext,
+            inbetweenMovetextTokens, previousMovetextTokenType, getPreviousMovetextTokenTypeAsString());
         System.out.println();
+    }
+    private static final String[] movetextTokenStrings = new String[]{"moveIndex", "moveWhite", "moveBlack"};
+    String getPreviousMovetextTokenTypeAsString() { 
+        if(Math.abs(previousMovetextTokenType) > 1) {
+            return "invalid index";
+        } 
+        return movetextTokenStrings[previousMovetextTokenType+1];
     }
     public static void main(String[] args) {
         try {

@@ -2,25 +2,30 @@ package xyz.skyjumper409.chessengine;
 
 import xyz.skyjumper409.chessengine.pgnutils.PGNFile;
 import xyz.skyjumper409.chessengine.pgnutils.PGNFileReader;
+import java.io.File;
 
 public class TestCli {
+    public static final File RESOURCES_DIR = new File("src/main/resources");
     public static void main(String[] args) {
         Game g = new Game();
-        String userInput = "";
+        File tmpPGNFile = new File(RESOURCES_DIR, "pgn/tmp.pgn");
+        if(tmpPGNFile.exists()) {
+            java.util.ArrayList<Move> presetMoves = null;
+            try {
+                PGNFileReader fileReader = new PGNFileReader(tmpPGNFile);
+                PGNFile file = fileReader.readFile();
+                presetMoves = file.getMoves();
+                fileReader.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            while(presetMoves.size() > 0) {
+                g.doMove(presetMoves.get(0));
+                presetMoves.remove(0);
+            }
+        }
         java.util.Scanner sc = new java.util.Scanner(System.in);
-        java.util.ArrayList<Move> presetMoves = null;
-        try {
-            PGNFileReader fileReader = new PGNFileReader("/home/lynn/Documents/coding/_chess_engine/chessengine/src/main/resources/pgn/tmp.pgn");
-            PGNFile file = fileReader.readFile();
-            presetMoves = file.getMoves();
-            fileReader.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        while(presetMoves.size() > 0) {
-            g.doMove(presetMoves.get(0));
-            presetMoves.remove(0);
-        }
+        String userInput = "";
         while (!userInput.equalsIgnoreCase("quit")) {
             System.out.println("waiting for input... ");
             if(sc.hasNext()) {
@@ -59,6 +64,8 @@ public class TestCli {
                     default:
                         break;
                 }
+            } else {
+                break;
             }
         }
         sc.close();
